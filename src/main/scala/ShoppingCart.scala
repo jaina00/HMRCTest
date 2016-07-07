@@ -14,4 +14,12 @@ class ShoppingCart {
     lineItems.map(_.price).sum
   }
 
+  def TotalWithOffers(): Int = {
+    val groupItems = lineItems.groupBy(identity).mapValues(_.size)
+    groupItems.foreach(x => {
+      sum += ((x._2 / x._1.buyItems * x._1.freeItems) + x._2 % x._1.buyItems) * x._1.price
+    })
+    sum
+  }
+
 }
